@@ -9,11 +9,19 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
+   <style>
+    body {background-color: gray;}
+    h1   {color: blue;}
+    p    {color: red;}
+    h3   {color: yellowgreen}
+    a    {color: limegreen}
+    div  {color: orange}
+   </style> 
   </head>
   <body>
     <div class="container">
       <!-- Add Jumbotron to Header -->
-      <div class="jumbotron text-center" style="background-image: url(https://cdn.wionews.com/sites/default/files/styles/story_page/public/2021/04/08/190606-untitled-design-11.jpg);">
+      <div class="jumbotron text-center " style="background-image: url(https://cdn.wionews.com/sites/default/files/styles/story_page/public/2021/04/08/190606-untitled-design-11.jpg);">
         <h1>Mission to Mars</h1>
         <!-- Add a button to activate scraping script -->
         <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
@@ -40,7 +48,7 @@
           <!-- if images is False/None/non-existent, then default to error message -->
           <img
             src="{{mars.featured_image | default('static/images/error.png', true) }}"
-            class="img-responsive"
+            class="img-thumbnail"
             alt="Responsive image"
           />
         </div>

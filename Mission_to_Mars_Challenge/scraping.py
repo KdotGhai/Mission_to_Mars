@@ -1,4 +1,4 @@
-# Import Splinter, BeautifulSoup, and Pandas
+## Import Splinter, BeautifulSoup, and Pandas
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
 import pandas as pd
@@ -21,7 +21,7 @@ def scrape_all():
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now(),
-        "hemispheres": hemispheres(browser)
+        #"hemispheres": hemispheres(browser)
     }
 
     # Stop webdriver and return data
@@ -103,17 +103,19 @@ def mars_facts():
     return df.to_html()
 
 
-#DELIVERABLE 2 CODE HERE:
-def hemispheres(browser):
 
+def hemispheres(browser):
+    # 1. Use browser to visit the URL 
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(url)
 
+    # 2. Create a list to hold the images and titles.
     hemisphere_image_urls = []
 
-
+    #items = browser.find_by_css('a.product-item h3')
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
     for i in range(4):
-
+        #create empty dictionary
         hemispheres = {}
         browser.find_by_css('a.product-item h3')[i].click()
         element = browser.find_link_by_text('Sample').first
@@ -123,19 +125,19 @@ def hemispheres(browser):
         hemispheres["title"] = title
         hemisphere_data = scrape_hemisphere(browser.html)
         hemisphere_image_urls.append(hemisphere_data)
-
         browser.back()
     return hemisphere_image_urls
 
+
 def scrape_hemisphere(html_text):
-     # parse html text
+    # parse html text
     hemi_soup = soup(html_text, "html.parser")
-     # adding try/except for error handling
+    # adding try/except for error handling
     try:
         title_elem = hemi_soup.find("h2", class_="title").get_text()
         sample_elem = hemi_soup.find("a", text="Sample").get("href")
     except AttributeError:
-         # Image error will return None, for better front-end handling
+        # Image error will return None, for better front-end handling
         title_elem = None
         sample_elem = None
     hemispheres = {
@@ -145,6 +147,6 @@ def scrape_hemisphere(html_text):
     return hemispheres
 
 if __name__ == "__main__":
+    
     # If running as script, print scraped data
     print(scrape_all())
-
